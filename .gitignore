@@ -1,0 +1,11 @@
+node_modules
+dist
+storybook-static
+.turbo
+coverage
+playwright-report
+test-results
+*.tsbuildinfo
+.DS_Store
+.env*.local
+.__mf__temp

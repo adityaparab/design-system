@@ -1,0 +1,135 @@
+.vds-grid {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  font-size: var(--vds-font-size-sm);
+  color: var(--vds-color-text-default);
+}
+.vds-grid__root {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  position: relative;
+}
+.vds-grid__wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+/* PrimeReact's VirtualScroller ships these structural rules only in styled mode. */
+.vds-grid__scroller {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  contain: strict;
+  transform: translateZ(0);
+  will-change: scroll-position;
+  outline: 0;
+}
+.vds-grid__scroller-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: 100%;
+  min-width: 100%;
+  will-change: transform;
+}
+.vds-grid__scroller-spacer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+  transform-origin: 0 0;
+}
+.vds-grid__table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+.vds-grid__thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--vds-color-bg-subtle);
+}
+.vds-grid__th {
+  height: 36px;
+  padding: 0 var(--vds-space-3);
+  border-bottom: 1px solid var(--vds-color-border-default);
+  background: var(--vds-color-bg-subtle);
+  color: var(--vds-color-text-muted);
+  font-size: var(--vds-font-size-xs);
+  font-weight: var(--vds-font-weight-semibold);
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  user-select: none;
+}
+.vds-grid__th--sortable {
+  cursor: pointer;
+}
+.vds-grid__th--sortable:hover,
+.vds-grid__th--sorted {
+  color: var(--vds-color-text-accent);
+}
+.vds-grid__th:focus-visible {
+  outline: 2px solid var(--vds-color-focus-ring);
+  outline-offset: -2px;
+}
+.vds-grid__th-content {
+  display: flex;
+  align-items: center;
+  gap: var(--vds-space-1);
+}
+.vds-grid__cell--end .vds-grid__th-content {
+  justify-content: flex-end;
+}
+.vds-grid__sort-icon {
+  width: 11px;
+  height: 11px;
+  flex: none;
+}
+.vds-grid__row {
+  cursor: pointer;
+  background: var(--vds-color-bg-surface);
+}
+.vds-grid__row:hover {
+  background: var(--vds-color-bg-hover);
+}
+.vds-grid__row:focus-visible {
+  outline: 2px solid var(--vds-color-focus-ring);
+  outline-offset: -2px;
+}
+.vds-grid__row--selected,
+.vds-grid__row--selected:hover {
+  background: var(--vds-color-bg-selected);
+  box-shadow: inset 3px 0 0 var(--vds-color-accent-default);
+}
+.vds-grid__row--loading {
+  cursor: progress;
+}
+.vds-grid__td {
+  padding: 0 var(--vds-space-3);
+  border-bottom: 1px solid var(--vds-color-border-default);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.vds-grid__cell--end {
+  text-align: right;
+}
+.vds-grid__empty td {
+  padding: var(--vds-space-8);
+  text-align: center;
+  color: var(--vds-color-text-muted);
+}

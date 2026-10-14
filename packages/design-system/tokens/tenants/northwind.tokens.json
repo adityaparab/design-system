@@ -1,0 +1,24 @@
+{
+  "$description": "Northwind LLP: teal brand, rounder corners, roomier rows. Only overrides are listed; everything else inherits from base.",
+  "$tenant": { "id": "northwind", "name": "Northwind LLP" },
+  "primitive": {
+    "color": {
+      "brand": {
+        "50": { "$value": "#e8f7f5" },
+        "100": { "$value": "#cdeee9" },
+        "200": { "$value": "#9fdcd3" },
+        "500": { "$value": "#178a7c" },
+        "600": { "$value": "#0f7366" },
+        "700": { "$value": "#0b5c52" },
+        "800": { "$value": "#08463f" }
+      }
+    },
+    "radius": {
+      "md": { "$value": "8px" },
+      "lg": { "$value": "14px" }
+    }
+  },
+  "size": {
+    "grid-row": { "$value": "44px" }
+  }
+}

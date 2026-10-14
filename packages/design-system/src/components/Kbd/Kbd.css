@@ -1,0 +1,16 @@
+.vds-kbd {
+  display: inline-flex;
+  align-items: center;
+  min-width: 1.5em;
+  height: 1.5em;
+  padding: 0 0.35em;
+  border: 1px solid var(--vds-color-border-strong);
+  border-bottom-width: 2px;
+  border-radius: var(--vds-radius-control);
+  background: var(--vds-color-bg-subtle);
+  color: var(--vds-color-text-muted);
+  font-family: var(--vds-font-family-mono);
+  font-size: var(--vds-font-size-xs);
+  line-height: 1;
+  justify-content: center;
+}

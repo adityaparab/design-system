@@ -1,0 +1,22 @@
+{
+  "name": "@verity/mock-api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Deterministic review API (BFF stand-in) with 100,000 seeded documents.",
+  "scripts": {
+    "dev": "node --watch src/server.ts",
+    "preview": "node src/server.ts",
+    "test": "vitest run",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@verity/contracts": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.4"
+  }
+}

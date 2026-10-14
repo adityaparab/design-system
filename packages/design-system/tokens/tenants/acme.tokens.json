@@ -1,0 +1,4 @@
+{
+  "$description": "Acme Legal uses the base theme unchanged.",
+  "$tenant": { "id": "acme", "name": "Acme Legal" }
+}

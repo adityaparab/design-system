@@ -1,0 +1,85 @@
+.vds-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--vds-space-2);
+  height: var(--vds-size-control-md);
+  padding: 0 var(--vds-space-4);
+  border: 1px solid transparent;
+  border-radius: var(--vds-radius-control);
+  font: inherit;
+  font-size: var(--vds-font-size-sm);
+  font-weight: var(--vds-font-weight-medium);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--vds-motion-duration-fast),
+    border-color var(--vds-motion-duration-fast);
+}
+.vds-button--sm {
+  height: var(--vds-size-control-sm);
+  padding: 0 var(--vds-space-3);
+  font-size: var(--vds-font-size-xs);
+}
+.vds-button:focus-visible {
+  outline: 2px solid var(--vds-color-focus-ring);
+  outline-offset: 2px;
+}
+.vds-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+.vds-button--primary {
+  background: var(--vds-color-accent-default);
+  color: var(--vds-color-text-on-accent);
+}
+.vds-button--primary:hover:not(:disabled) {
+  background: var(--vds-color-accent-hover);
+}
+.vds-button--primary:active:not(:disabled) {
+  background: var(--vds-color-accent-active);
+}
+.vds-button--secondary {
+  background: var(--vds-color-bg-surface);
+  border-color: var(--vds-color-border-strong);
+  color: var(--vds-color-text-default);
+}
+.vds-button--secondary:hover:not(:disabled) {
+  background: var(--vds-color-bg-hover);
+}
+.vds-button--ghost {
+  background: transparent;
+  color: var(--vds-color-text-accent);
+}
+.vds-button--ghost:hover:not(:disabled) {
+  background: var(--vds-color-bg-hover);
+}
+.vds-button--danger {
+  background: var(--vds-color-status-danger-solid);
+  color: var(--vds-color-text-on-accent);
+}
+.vds-button--danger:hover:not(:disabled) {
+  background: var(--vds-color-status-danger-fg);
+}
+.vds-button__icon {
+  display: inline-flex;
+}
+.vds-button__icon svg,
+.vds-button__spinner {
+  width: 14px;
+  height: 14px;
+}
+.vds-button__spinner {
+  animation: vds-spin 0.8s linear infinite;
+}
+@keyframes vds-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vds-button__spinner {
+    animation-duration: 2.4s;
+  }
+}

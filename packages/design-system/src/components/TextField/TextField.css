@@ -1,0 +1,61 @@
+.vds-field {
+  display: grid;
+  gap: var(--vds-space-1);
+  min-width: 0;
+}
+.vds-field__label {
+  font-size: var(--vds-font-size-sm);
+  font-weight: var(--vds-font-weight-semibold);
+  color: var(--vds-color-text-default);
+}
+.vds-field__hint {
+  font-size: var(--vds-font-size-xs);
+  color: var(--vds-color-text-muted);
+}
+.vds-input {
+  width: 100%;
+  height: var(--vds-size-control-md);
+  padding: 0 var(--vds-space-3);
+  border: 1px solid var(--vds-color-border-strong);
+  border-radius: var(--vds-radius-control);
+  background: var(--vds-color-bg-surface);
+  color: var(--vds-color-text-default);
+  font: inherit;
+  font-size: var(--vds-font-size-sm);
+}
+.vds-input::placeholder {
+  color: var(--vds-color-text-muted);
+}
+.vds-input:hover {
+  border-color: var(--vds-color-accent-default);
+}
+.vds-input:focus-visible {
+  outline: 2px solid var(--vds-color-focus-ring);
+  outline-offset: 1px;
+  border-color: var(--vds-color-accent-default);
+}
+.vds-input--textarea {
+  height: auto;
+  padding: var(--vds-space-2) var(--vds-space-3);
+  resize: vertical;
+  line-height: 1.45;
+}
+.vds-input-wrap {
+  position: relative;
+}
+.vds-input-wrap--icon .vds-input {
+  padding-left: 32px;
+}
+.vds-input-wrap__icon {
+  position: absolute;
+  top: 50%;
+  left: var(--vds-space-3);
+  display: inline-flex;
+  color: var(--vds-color-text-muted);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.vds-input-wrap__icon svg {
+  width: 14px;
+  height: 14px;
+}

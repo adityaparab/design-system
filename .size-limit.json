@@ -1,0 +1,37 @@
+[
+  {
+    "name": "design-system: JS (excl. PrimeReact)",
+    "path": "packages/design-system/dist/index.js",
+    "limit": "7 kB"
+  },
+  {
+    "name": "design-system: CSS (all components + 2 tenant themes)",
+    "path": "packages/design-system/dist/styles.css",
+    "limit": "5 kB"
+  },
+  {
+    "name": "shell: all JS (React, MF runtime, design system + PrimeReact as shared singletons)",
+    "path": "apps/shell/dist/assets/*.js",
+    "limit": "240 kB"
+  },
+  {
+    "name": "review-list: remoteEntry.js",
+    "path": "apps/review-list/dist/remoteEntry.js",
+    "limit": "8 kB"
+  },
+  {
+    "name": "review-list: exposed module (what the shell downloads on top of shared deps)",
+    "path": "apps/review-list/dist/assets/ReviewList-*.js",
+    "limit": "8 kB"
+  },
+  {
+    "name": "doc-viewer: remoteEntry.js",
+    "path": "apps/doc-viewer/dist/remoteEntry.js",
+    "limit": "8 kB"
+  },
+  {
+    "name": "doc-viewer: exposed module (what the shell downloads on top of shared deps)",
+    "path": "apps/doc-viewer/dist/assets/DocViewer-*.js",
+    "limit": "8 kB"
+  }
+]

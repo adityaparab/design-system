@@ -1,0 +1,32 @@
+.vds-state {
+  display: grid;
+  justify-items: center;
+  gap: var(--vds-space-2);
+  padding: var(--vds-space-8) var(--vds-space-6);
+  text-align: center;
+  color: var(--vds-color-text-muted);
+  font-size: var(--vds-font-size-sm);
+}
+.vds-state__title {
+  margin: 0;
+  font-size: var(--vds-font-size-md);
+  font-weight: var(--vds-font-weight-semibold);
+  color: var(--vds-color-text-default);
+}
+.vds-state__body {
+  max-width: 44ch;
+}
+.vds-state__body > p {
+  margin: 0;
+}
+.vds-state--error {
+  border: 1px dashed var(--vds-color-status-danger-fg);
+  border-radius: var(--vds-radius-surface);
+  background: var(--vds-color-status-danger-bg);
+}
+.vds-state--error .vds-state__title {
+  color: var(--vds-color-status-danger-fg);
+}
+.vds-state__action {
+  margin-top: var(--vds-space-2);
+}

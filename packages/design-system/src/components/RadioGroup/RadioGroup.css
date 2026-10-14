@@ -1,0 +1,100 @@
+/* Shared by RadioGroup and Checkbox. PrimeReact renders: root > input + box > icon. */
+.vds-choice-group {
+  display: flex;
+  gap: var(--vds-space-2);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.vds-choice-group--vertical {
+  flex-direction: column;
+}
+.vds-choice-group--horizontal {
+  flex-wrap: wrap;
+  gap: var(--vds-space-4);
+}
+.vds-choice-group__legend {
+  padding: 0;
+  margin-bottom: var(--vds-space-2);
+  font-size: var(--vds-font-size-sm);
+  font-weight: var(--vds-font-weight-semibold);
+  color: var(--vds-color-text-default);
+}
+.vds-choice {
+  display: flex;
+  align-items: center;
+  gap: var(--vds-space-2);
+  min-height: 28px;
+}
+.vds-choice__control {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+.vds-choice__input {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.vds-choice__input:disabled {
+  cursor: not-allowed;
+}
+.vds-choice__box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border: 1.5px solid var(--vds-color-border-strong);
+  background: var(--vds-color-bg-surface);
+  transition: border-color var(--vds-motion-duration-fast);
+}
+.vds-choice__control--radio .vds-choice__box {
+  border-radius: 50%;
+}
+.vds-choice__control--checkbox .vds-choice__box {
+  border-radius: var(--vds-radius-control);
+}
+.vds-choice__control:hover .vds-choice__box {
+  border-color: var(--vds-color-accent-default);
+}
+.vds-choice__input:focus-visible + .vds-choice__box {
+  outline: 2px solid var(--vds-color-focus-ring);
+  outline-offset: 2px;
+}
+.vds-choice__control[data-p-checked='true'] .vds-choice__box {
+  border-color: var(--vds-color-accent-default);
+}
+.vds-choice__control--checkbox[data-p-checked='true'] .vds-choice__box {
+  background: var(--vds-color-accent-default);
+}
+.vds-choice__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: transparent;
+}
+.vds-choice__control[data-p-checked='true'] .vds-choice__dot {
+  background: var(--vds-color-accent-default);
+}
+.vds-choice__check {
+  width: 12px;
+  height: 12px;
+  color: var(--vds-color-text-on-accent);
+}
+.vds-choice__label {
+  font-size: var(--vds-font-size-sm);
+  color: var(--vds-color-text-default);
+  cursor: pointer;
+}
+.vds-choice-group:disabled .vds-choice__label {
+  color: var(--vds-color-text-muted);
+}

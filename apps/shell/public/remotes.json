@@ -1,0 +1,5 @@
+{
+  "$comment": "Per-environment remote registry. In production this is served by the deployment pipeline (or a manifest service); promoting or rolling back a remote is an edit here, not a shell rebuild.",
+  "reviewList": { "entry": "http://localhost:5174/remoteEntry.js" },
+  "docViewer": { "entry": "http://localhost:5175/remoteEntry.js" }
+}

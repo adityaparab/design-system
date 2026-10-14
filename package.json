@@ -1,0 +1,38 @@
+{
+  "name": "verity-review-platform",
+  "private": true,
+  "description": "Micro-frontend + design-system reference platform for a legal document-review product (interview portfolio project).",
+  "type": "module",
+  "packageManager": "pnpm@12.9.1",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "turbo run dev --filter=./apps/*",
+    "build": "turbo run build",
+    "start": "turbo run build --filter=./apps/* && turbo run preview --filter=./apps/*",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "size": "size-limit",
+    "e2e": "pnpm --filter @verity/e2e e2e",
+    "storybook": "pnpm --filter @verity/design-system storybook",
+    "mcp": "pnpm --filter @verity/ds-mcp start",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "ci": "turbo run lint typecheck test build && pnpm size"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^3.0.3",
+    "@eslint/js": "^9.39.5",
+    "@size-limit/file": "^14.2.0",
+    "eslint": "^9.39.5",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.13.0",
+    "size-limit": "^14.2.0",
+    "turbo": "^2.11.8",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.71.2"
+  }
+}

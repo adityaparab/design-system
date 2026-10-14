@@ -1,0 +1,363 @@
+{
+  "$description": "Base design tokens in W3C DTCG format. Primitives hold raw values; semantic tokens alias primitives and are the only tokens components may use.",
+  "primitive": {
+    "color": {
+      "brand": {
+        "$type": "color",
+        "50": {
+          "$value": "#eef2ff"
+        },
+        "100": {
+          "$value": "#e0e7ff"
+        },
+        "200": {
+          "$value": "#c7d2fe"
+        },
+        "500": {
+          "$value": "#4f5bd5"
+        },
+        "600": {
+          "$value": "#3d46b8"
+        },
+        "700": {
+          "$value": "#323996"
+        },
+        "800": {
+          "$value": "#272d75"
+        }
+      },
+      "neutral": {
+        "$type": "color",
+        "0": {
+          "$value": "#ffffff"
+        },
+        "25": {
+          "$value": "#fafbfc"
+        },
+        "50": {
+          "$value": "#f4f5f7"
+        },
+        "100": {
+          "$value": "#e9ebef"
+        },
+        "200": {
+          "$value": "#d6d9e0"
+        },
+        "300": {
+          "$value": "#b9bec9"
+        },
+        "400": {
+          "$value": "#7d8491"
+        },
+        "500": {
+          "$value": "#6b7280"
+        },
+        "600": {
+          "$value": "#535a67"
+        },
+        "700": {
+          "$value": "#3a404b"
+        },
+        "900": {
+          "$value": "#161a21"
+        }
+      },
+      "green": {
+        "$type": "color",
+        "50": {
+          "$value": "#ecfdf3"
+        },
+        "700": {
+          "$value": "#146c43"
+        }
+      },
+      "amber": {
+        "$type": "color",
+        "50": {
+          "$value": "#fff8e6"
+        },
+        "700": {
+          "$value": "#8a5a00"
+        }
+      },
+      "red": {
+        "$type": "color",
+        "50": {
+          "$value": "#fef1f1"
+        },
+        "600": {
+          "$value": "#c62828"
+        },
+        "700": {
+          "$value": "#a61b1b"
+        }
+      },
+      "violet": {
+        "$type": "color",
+        "50": {
+          "$value": "#f5f0ff"
+        },
+        "700": {
+          "$value": "#5b34b0"
+        }
+      }
+    },
+    "radius": {
+      "$type": "dimension",
+      "sm": {
+        "$value": "4px"
+      },
+      "md": {
+        "$value": "6px"
+      },
+      "lg": {
+        "$value": "10px"
+      }
+    }
+  },
+  "color": {
+    "$type": "color",
+    "bg": {
+      "canvas": {
+        "$value": "{primitive.color.neutral.50}",
+        "$description": "App background behind surfaces"
+      },
+      "surface": {
+        "$value": "{primitive.color.neutral.0}",
+        "$description": "Cards, panels, grids"
+      },
+      "subtle": {
+        "$value": "{primitive.color.neutral.25}",
+        "$description": "Headers, zebra rows, secondary areas"
+      },
+      "hover": {
+        "$value": "{primitive.color.neutral.50}",
+        "$description": "Hovered rows and ghost buttons"
+      },
+      "selected": {
+        "$value": "{primitive.color.brand.50}",
+        "$description": "Selected rows and options"
+      },
+      "inverse": {
+        "$value": "{primitive.color.neutral.900}",
+        "$description": "Top bar, tooltips"
+      },
+      "backdrop": {
+        "$value": "rgb(22 26 33 / 0.45)",
+        "$description": "Modal backdrop"
+      }
+    },
+    "text": {
+      "default": {
+        "$value": "{primitive.color.neutral.900}"
+      },
+      "muted": {
+        "$value": "{primitive.color.neutral.600}"
+      },
+      "inverse": {
+        "$value": "{primitive.color.neutral.0}"
+      },
+      "accent": {
+        "$value": "{primitive.color.brand.700}"
+      },
+      "on-accent": {
+        "$value": "{primitive.color.neutral.0}"
+      }
+    },
+    "border": {
+      "default": {
+        "$value": "{primitive.color.neutral.200}"
+      },
+      "strong": {
+        "$value": "{primitive.color.neutral.400}",
+        "$description": "Form control boundaries; 3:1 against surfaces (WCAG 1.4.11)"
+      },
+      "selected": {
+        "$value": "{primitive.color.brand.500}"
+      }
+    },
+    "accent": {
+      "default": {
+        "$value": "{primitive.color.brand.600}",
+        "$description": "Primary actions, links, active states"
+      },
+      "hover": {
+        "$value": "{primitive.color.brand.700}"
+      },
+      "active": {
+        "$value": "{primitive.color.brand.800}"
+      },
+      "subtle": {
+        "$value": "{primitive.color.brand.100}"
+      }
+    },
+    "focus": {
+      "ring": {
+        "$value": "{primitive.color.brand.500}",
+        "$description": "Keyboard focus outline; must reach 3:1 against surfaces (WCAG 2.2 SC 1.4.11)"
+      }
+    },
+    "status": {
+      "success-bg": {
+        "$value": "{primitive.color.green.50}"
+      },
+      "success-fg": {
+        "$value": "{primitive.color.green.700}"
+      },
+      "warning-bg": {
+        "$value": "{primitive.color.amber.50}"
+      },
+      "warning-fg": {
+        "$value": "{primitive.color.amber.700}"
+      },
+      "danger-bg": {
+        "$value": "{primitive.color.red.50}"
+      },
+      "danger-fg": {
+        "$value": "{primitive.color.red.700}"
+      },
+      "danger-solid": {
+        "$value": "{primitive.color.red.600}"
+      },
+      "info-bg": {
+        "$value": "{primitive.color.brand.50}"
+      },
+      "info-fg": {
+        "$value": "{primitive.color.brand.700}"
+      },
+      "privileged-bg": {
+        "$value": "{primitive.color.violet.50}"
+      },
+      "privileged-fg": {
+        "$value": "{primitive.color.violet.700}"
+      }
+    },
+    "highlight": {
+      "bg": {
+        "$value": "#fff1a8",
+        "$description": "Search-hit highlight in document text"
+      },
+      "active-bg": {
+        "$value": "#ffd24d",
+        "$description": "Highlight for the citation currently in focus"
+      }
+    }
+  },
+  "space": {
+    "$type": "dimension",
+    "0": {
+      "$value": "0"
+    },
+    "1": {
+      "$value": "4px"
+    },
+    "2": {
+      "$value": "8px"
+    },
+    "3": {
+      "$value": "12px"
+    },
+    "4": {
+      "$value": "16px"
+    },
+    "5": {
+      "$value": "20px"
+    },
+    "6": {
+      "$value": "24px"
+    },
+    "8": {
+      "$value": "32px"
+    }
+  },
+  "radius": {
+    "$type": "dimension",
+    "control": {
+      "$value": "{primitive.radius.md}"
+    },
+    "surface": {
+      "$value": "{primitive.radius.lg}"
+    },
+    "pill": {
+      "$value": "999px"
+    }
+  },
+  "font": {
+    "family": {
+      "$type": "fontFamily",
+      "sans": {
+        "$value": "Inter, 'Segoe UI', system-ui, -apple-system, sans-serif"
+      },
+      "mono": {
+        "$value": "'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace"
+      },
+      "document": {
+        "$value": "Georgia, 'Times New Roman', serif",
+        "$description": "Reading face for document bodies"
+      }
+    },
+    "size": {
+      "$type": "dimension",
+      "xs": {
+        "$value": "0.75rem"
+      },
+      "sm": {
+        "$value": "0.8125rem"
+      },
+      "md": {
+        "$value": "0.9375rem"
+      },
+      "lg": {
+        "$value": "1.125rem"
+      },
+      "xl": {
+        "$value": "1.375rem"
+      }
+    },
+    "weight": {
+      "$type": "fontWeight",
+      "regular": {
+        "$value": "400"
+      },
+      "medium": {
+        "$value": "500"
+      },
+      "semibold": {
+        "$value": "600"
+      }
+    }
+  },
+  "size": {
+    "$type": "dimension",
+    "control-sm": {
+      "$value": "28px"
+    },
+    "control-md": {
+      "$value": "36px"
+    },
+    "grid-row": {
+      "$value": "40px",
+      "$description": "Row height for DataGrid; virtualization uses this value"
+    }
+  },
+  "shadow": {
+    "$type": "shadow",
+    "raised": {
+      "$value": "0 1px 2px rgb(22 26 33 / 0.06), 0 1px 3px rgb(22 26 33 / 0.1)"
+    },
+    "overlay": {
+      "$value": "0 8px 24px rgb(22 26 33 / 0.16), 0 2px 6px rgb(22 26 33 / 0.08)"
+    }
+  },
+  "motion": {
+    "duration": {
+      "$type": "duration",
+      "fast": {
+        "$value": "120ms"
+      },
+      "base": {
+        "$value": "200ms"
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+.vds-mark {
+  border-radius: 2px;
+  color: inherit;
+  padding: 0 1px;
+}
+.vds-mark--hit {
+  background: var(--vds-color-highlight-bg);
+}
+.vds-mark--citation {
+  background: transparent;
+  text-decoration: underline;
+  text-decoration-color: var(--vds-color-accent-default);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  scroll-margin: 96px;
+}
+.vds-mark--active {
+  background: var(--vds-color-highlight-active-bg);
+  outline: 2px solid var(--vds-color-accent-default);
+  outline-offset: 1px;
+}

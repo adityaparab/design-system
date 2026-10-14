@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "verity-design-system": {
+      "command": "node",
+      "args": ["packages/ds-mcp/dist/index.js"]
+    }
+  }
+}
