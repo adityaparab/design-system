@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { countDocuments, getDocument, listDocuments, saveCoding, TOTAL_DOCUMENTS, validateCoding } from './data';
+import { countDocuments, getDocument, listDocuments, saveCoding, TOTAL_DOCUMENTS, validateCoding } from './data.js';
 
 describe('mock review data', () => {
   it('is deterministic and complete', () => {

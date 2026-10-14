@@ -26,6 +26,12 @@ function Harness() {
   );
 }
 
+// Standalone deploys of a remote have no backend either.
+if (import.meta.env.VITE_API_MODE === 'browser') {
+  const { installInBrowserReviewApi } = await import('@verity/review-api/browser');
+  installInBrowserReviewApi();
+}
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Harness />

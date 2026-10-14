@@ -13,6 +13,12 @@
       ],
       "outputs": [
         "dist/**"
+      ],
+      "env": [
+        "VITE_API_MODE",
+        "REVIEW_LIST_URL",
+        "DOC_VIEWER_URL",
+        "BUILD_ID"
       ]
     },
     "dev": {
@@ -20,14 +26,22 @@
         "^build"
       ],
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "passThroughEnv": [
+        "LATENCY",
+        "PORT"
+      ]
     },
     "preview": {
       "dependsOn": [
         "build"
       ],
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "passThroughEnv": [
+        "LATENCY",
+        "PORT"
+      ]
     },
     "test": {
       "dependsOn": [

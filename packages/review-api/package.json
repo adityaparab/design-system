@@ -1,0 +1,33 @@
+{
+  "name": "@verity/review-api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Runtime-agnostic review API (Fetch API Request -> Response) over 100,000 seeded documents. Runs in Node (apps/mock-api) or in the browser (static demo deploys).",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./browser": {
+      "types": "./dist/browser.d.ts",
+      "import": "./dist/browser.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest run",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@verity/contracts": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.4"
+  }
+}

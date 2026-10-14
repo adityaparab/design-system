@@ -16,6 +16,7 @@
     "@tanstack/react-query": "^5.104.2",
     "@verity/contracts": "workspace:*",
     "@verity/design-system": "workspace:*",
+    "@verity/review-api": "workspace:*",
     "date-fns": "3.6.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"

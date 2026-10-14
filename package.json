@@ -20,7 +20,8 @@
     "mcp": "pnpm --filter @verity/ds-mcp start",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "ci": "turbo run lint typecheck test build && pnpm size"
+    "ci": "turbo run lint typecheck test build && pnpm size",
+    "deploy:vercel": "node scripts/deploy-vercel.mjs"
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.3",

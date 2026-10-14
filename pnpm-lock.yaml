@@ -211,6 +211,9 @@ importers:
       '@verity/design-system':
         specifier: workspace:*
         version: link:../../packages/design-system
+      '@verity/review-api':
+        specifier: workspace:*
+        version: link:../../packages/review-api
       date-fns:
         specifier: 3.6.0
         version: 3.6.0
@@ -260,9 +263,9 @@ importers:
 
   apps/mock-api:
     dependencies:
-      '@verity/contracts':
+      '@verity/review-api':
         specifier: workspace:*
-        version: link:../../packages/contracts
+        version: link:../../packages/review-api
     devDependencies:
       '@types/node':
         specifier: ^24.0.0
@@ -270,9 +273,6 @@ importers:
       typescript:
         specifier: ~6.0.3
         version: 6.0.3
-      vitest:
-        specifier: ^5.0.4
-        version: 5.0.4(@types/node@24.19.2)(jsdom@30.1.2)(vite@8.3.4(@types/node@24.19.2)(esbuild@0.28.2)(yaml@2.9.1))
 
   apps/review-list:
     dependencies:
@@ -285,6 +285,9 @@ importers:
       '@verity/design-system':
         specifier: workspace:*
         version: link:../../packages/design-system
+      '@verity/review-api':
+        specifier: workspace:*
+        version: link:../../packages/review-api
       date-fns:
         specifier: 4.4.0
         version: 4.4.0
@@ -343,6 +346,9 @@ importers:
       '@verity/design-system':
         specifier: workspace:*
         version: link:../../packages/design-system
+      '@verity/review-api':
+        specifier: workspace:*
+        version: link:../../packages/review-api
       react:
         specifier: ^19.3.1
         version: 19.3.1
@@ -499,6 +505,19 @@ importers:
       '@types/node':
         specifier: ^24.0.0
         version: 24.19.2
+      typescript:
+        specifier: ~6.0.3
+        version: 6.0.3
+      vitest:
+        specifier: ^5.0.4
+        version: 5.0.4(@types/node@24.19.2)(jsdom@30.1.2)(vite@8.3.4(@types/node@24.19.2)(esbuild@0.28.2)(yaml@2.9.1))
+
+  packages/review-api:
+    dependencies:
+      '@verity/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+    devDependencies:
       typescript:
         specifier: ~6.0.3
         version: 6.0.3

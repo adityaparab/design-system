@@ -22,6 +22,12 @@ const platform: PlatformContext = {
 
 const documentId = new URLSearchParams(window.location.search).get('doc') ?? 'VRT-0000003';
 
+// Standalone deploys of a remote have no backend either.
+if (import.meta.env.VITE_API_MODE === 'browser') {
+  const { installInBrowserReviewApi } = await import('@verity/review-api/browser');
+  installInBrowserReviewApi();
+}
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <div style={{ height: '100vh', padding: 16 }}>
