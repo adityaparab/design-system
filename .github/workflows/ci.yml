@@ -4,10 +4,12 @@ on:
   pull_request:
   push:
     branches: [main]
+  workflow_dispatch: # on main: verify, then redeploy every app
 
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  # Superseded PR runs are cancelled; main runs queue, so production deploys never race.
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 env:
   TURBO_TELEMETRY_DISABLED: 1
@@ -75,3 +77,69 @@ jobs:
             e2e/playwright-report
             e2e/test-results
           retention-days: 7
+
+  deploy:
+    name: Deploy changed apps to Vercel
+    needs: [verify, e2e]
+    # Pushes to main ship to production; same-repo PRs get previews (fork PRs get no secrets).
+    if: >-
+      (github.event_name != 'pull_request' && github.ref == 'refs/heads/main') ||
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      actions: read # gh run list: find the last commit main deployed
+    environment:
+      name: ${{ github.event_name == 'pull_request' && 'preview' || 'production' }}
+      # The shell this run deployed, or (main, nothing changed) the live one.
+      url: ${{ steps.deploy.outputs.url || (github.event_name != 'pull_request' && 'https://verity-review.vercel.app' || '') }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # Turborepo diffs against an older commit
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      # PRs diff against their base. Main diffs against the last push whose run went green
+      # (deploy included), so a failed or cancelled run's changes ship with the next one.
+      # No base (manual run, rewritten history) means every app redeploys.
+      - name: Find the commit to diff against
+        id: base
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT: ${{ github.event_name }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          sha=""
+          if [ "$EVENT" = pull_request ]; then
+            sha="$PR_BASE_SHA"
+          elif [ "$EVENT" = push ]; then
+            sha=$(gh run list --workflow ci.yml --branch main --event push --status success --limit 1 --json headSha --jq '.[0].headSha // ""')
+          fi
+          if [ -n "$sha" ] && ! git merge-base --is-ancestor "$sha" HEAD; then sha=""; fi
+          echo "Diffing against: ${sha:-nothing, redeploying every app}"
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+
+      - name: Work out which apps changed (turbo ls --affected)
+        id: affected
+        env:
+          TURBO_SCM_BASE: ${{ steps.base.outputs.sha }}
+        run: |
+          apps=$(node scripts/affected-apps.mjs) # an assignment, so a failure fails the step
+          echo "apps=$apps" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy ${{ steps.affected.outputs.apps || 'nothing' }}
+        id: deploy
+        if: steps.affected.outputs.apps != ''
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          MODE: ${{ github.event_name == 'pull_request' && '--preview' || '' }}
+          APPS: ${{ steps.affected.outputs.apps }}
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then echo "::error::Add a VERCEL_TOKEN repository secret (see README, Deployment)"; exit 1; fi
+          pnpm deploy:vercel $MODE $APPS

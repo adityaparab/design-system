@@ -49,7 +49,7 @@ Each remote also runs standalone with a fake platform harness (http://localhost:
 | `pnpm storybook` | Design-system docs on http://localhost:6006 with a tenant switcher |
 | `pnpm changeset` | Record a version bump + release note for the design system or contracts |
 | `pnpm mcp` | Run the design-system MCP server on stdio (already registered in `.mcp.json`) |
-| `pnpm deploy:vercel [app…]` | Static deploy to Vercel, one project per app (see [Deployment](#deployment)) |
+| `pnpm deploy:vercel [--preview] [app…]` | Static deploy to Vercel, one project per app; CI runs it on every merge (see [Deployment](#deployment)) |
 
 ## A five-minute demo
 
@@ -85,6 +85,30 @@ pnpm deploy:vercel doc-viewer
 ```
 
 That redeploys the viewer without touching the shell. `scripts/deploy-vercel.mjs` builds each app and copies its `vercel.json` (headers, rewrites) into `dist/`. It then deploys with the Vercel CLI and writes the shell's `remotes.json` from the remotes' production URLs. That's ADR 0001's "the registry is per environment" in practice.
+
+### Continuous deployment
+
+CI runs the same script. The `deploy` job in `.github/workflows/ci.yml` starts once `verify` and `e2e` pass:
+
+| Trigger | Ships | Changes measured since |
+| --- | --- | --- |
+| Push to `main` | The changed apps, to production | The last push to `main` whose CI run went green |
+| Pull request from this repo | A preview of the changed apps, plus a shell that loads them | The PR's base commit |
+| *Run workflow* on `main` | Every app, to production | Nothing (full redeploy) |
+
+`scripts/affected-apps.mjs` asks Turborepo (`turbo ls --affected`) which workspace packages changed since that commit, directly or through a dependency, and keeps the apps that have a `vercel.json`. Its output is the app list for `pnpm deploy:vercel`:
+
+- A change under `apps/doc-viewer` redeploys `verity-doc-viewer` and nothing else. The shell's `remotes.json` names the remotes' production aliases, which don't move, so the shell isn't rebuilt.
+- A change to a shared package (`design-system`, `contracts`, `review-api`, `build-config`) redeploys every app that depends on it. Today that's all three.
+- Docs, CI config and root scripts deploy nothing. *Run workflow* forces a full redeploy.
+
+Measuring from the last green run, not the previous commit, means a failed or cancelled run's changes go out with the next one. Runs on `main` queue instead of cancelling each other, so two production deploys never race. The job's step name and summary say which apps were deployed and which were unchanged. The `production` or `preview` GitHub environment links to the shell.
+
+**Pull request previews.** `pnpm deploy:vercel --preview doc-viewer` deploys the viewer as a Vercel preview. It then builds a shell whose `remotes.json` points at that preview, and at production for the review list. The PR's *View deployment* button opens that shell. A remote-only PR still gets a shell build, because the remote alone isn't the composed app.
+
+Vercel Authentication is off on all three projects, so previews are public, like production. That suits a demo with public code and generated data. With protection on (Vercel's default), a preview URL redirects to a Vercel login, and the preview shell's cross-origin `import()` of a remote's `remoteEntry.js` carries no login cookie. The PR's remotes would fail to load, even for the project owner. Keeping previews private would mean serving the remotes from the shell's origin, so one login covers both.
+
+**Setup.** The job authenticates with a `VERCEL_TOKEN` repository secret (GitHub → Settings → Secrets and variables → Actions). Create the token in Vercel under Account Settings → Tokens, scoped to the `personal-2bdc` team. Pull requests from forks get no secrets, so they get no preview.
 
 **There is no backend.** Deploy builds set `VITE_API_MODE=browser`, so `@verity/review-api` (the same Fetch-API router `apps/mock-api` serves in Node) runs inside the visitor's tab behind a patched `fetch('/api/…')`. The remotes don't know the difference. Every visitor gets a private, in-memory sandbox that resets on reload. A patched `fetch` is used rather than a service worker so hard reloads keep working.
 
@@ -163,6 +187,7 @@ More decisions, made in code:
 | Bundle budgets: each remote adds about 9 KB brotli on top of the shared dependencies | `.size-limit.json` |
 | Changesets required for design-system/contract changes in pull requests | `.github/workflows/ci.yml` |
 | 10 E2E tests: keyboard review flow, theming, focus-trapped dialog, all three failure drills, share scope; run locally, in CI and against the live site | `pnpm e2e` |
+| Nothing deploys until every gate above passes; then only the apps a change affects ship | `.github/workflows/ci.yml` (`deploy` job) |
 
 ![Platform inspector](docs/images/platform-inspector.png)
 
@@ -170,7 +195,7 @@ More decisions, made in code:
 
 This repo shows the architecture, so some parts are deliberately stubbed:
 
-- **Continuous deployment:** run `pnpm deploy:vercel` from CI with a Vercel token, using Turborepo's change detection to deploy only the apps a commit touched. Use preview deploys per pull request, with a per-PR `remotes.json`.
+- **Build once, promote:** `main` rebuilds each app for production. A stricter pipeline would promote the exact preview build the PR tested (`vercel promote`) and run the E2E suite against it first (`E2E_BASE_URL`).
 - **Identity:** a real OIDC flow and token refresh in the shell. Remotes already receive the session through `PlatformContext`, so they wouldn't change.
 - **Remote registry service:** `remotes.json` as a managed manifest per environment and tenant, enabling canaries ("5% of Acme on doc-viewer 1.8"), instant rollback and audit history.
 - **Observability:** swap the in-memory telemetry for RUM/OpenTelemetry. Track Core Web Vitals (INP especially, for keyboard-heavy review), remote load timings and error rates per remote build.
