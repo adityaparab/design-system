@@ -93,7 +93,7 @@ jobs:
     environment:
       name: ${{ github.event_name == 'pull_request' && 'preview' || 'production' }}
       # The shell this run deployed, or (main, nothing changed) the live one.
-      url: ${{ steps.deploy.outputs.url || (github.event_name != 'pull_request' && 'https://verity-review.vercel.app' || '') }}
+      url: ${{ steps.deploy.outputs.url || (github.event_name != 'pull_request' && 'https://design.adityaparab.dev' || '') }}
     steps:
       - uses: actions/checkout@v7
         with:

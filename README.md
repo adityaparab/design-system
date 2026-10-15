@@ -7,7 +7,7 @@ A working, tested reference platform for a legal document-review product:
 - **Platform guardrails:** a typed host/remote contract, failure isolation, accessibility in unit and E2E tests, bundle budgets, changesets, and CI.
 - **An MCP server** that gives coding agents (Claude Code, Cursor) the design system's components, props, tokens and rules.
 
-**Live demo: https://verity-review.vercel.app** (no sign-up; pick a demo reviewer). The two remotes are deployed
+**Live demo: https://design.adityaparab.dev** (no sign-up; pick a demo reviewer). The two remotes are deployed
 separately at [verity-review-list.vercel.app](https://verity-review-list.vercel.app) and
 [verity-doc-viewer.vercel.app](https://verity-doc-viewer.vercel.app).
 
@@ -70,7 +70,7 @@ Each app is its own Vercel project, so each can be released and rolled back on i
 
 | Project | URL | Serves |
 | --- | --- | --- |
-| `verity-review` | https://verity-review.vercel.app | Shell. SPA rewrite to `index.html`; `remotes.json` is `no-cache` |
+| `verity-review` | https://design.adityaparab.dev (custom domain) | Shell. SPA rewrite to `index.html`; `remotes.json` is `no-cache` |
 | `verity-review-list` | https://verity-review-list.vercel.app | Remote. CORS open for `remoteEntry.js` and assets; `remoteEntry.js` is `no-cache`, hashed assets immutable |
 | `verity-doc-viewer` | https://verity-doc-viewer.vercel.app | Remote. Same headers |
 
@@ -115,7 +115,7 @@ Vercel Authentication is off on all three projects, so previews are public, like
 The E2E suite runs against the live site too:
 
 ```bash
-E2E_BASE_URL=https://verity-review.vercel.app pnpm e2e
+E2E_BASE_URL=https://design.adityaparab.dev pnpm e2e
 ```
 
 ## Architecture

@@ -24,10 +24,11 @@ const VERCEL_SCOPE = process.env.VERCEL_SCOPE ?? 'personal-2bdc';
 const APPS = {
   'review-list': { pkg: '@verity/review-list', project: 'verity-review-list', env: 'REVIEW_LIST_URL' },
   'doc-viewer': { pkg: '@verity/doc-viewer', project: 'verity-doc-viewer', env: 'DOC_VIEWER_URL' },
-  shell: { pkg: '@verity/shell', project: 'verity-review' },
+  // The shell's public URL is a custom domain on its Vercel project; remotes use their *.vercel.app aliases.
+  shell: { pkg: '@verity/shell', project: 'verity-review', domain: 'design.adityaparab.dev' },
 };
 
-const productionUrl = (project) => `https://${project}.vercel.app`;
+const productionUrl = (name) => `https://${APPS[name].domain ?? `${APPS[name].project}.vercel.app`}`;
 
 const argv = process.argv.slice(2);
 const preview = argv.includes('--preview');
@@ -56,7 +57,7 @@ function deploy(name) {
   const out = run('npx', cliArgs, { cwd: dist });
   const result = JSON.parse(out.slice(out.indexOf('{')));
   if (result.status !== 'ok') throw new Error(`${name}: ${result.message ?? out}`);
-  const url = preview ? result.deployment.url : result.deployment.productionUrl;
+  const url = preview ? result.deployment.url : productionUrl(name);
   console.log(`  ✓ ${url}  (${result.deployment.url})`);
   deployed.push({ name, url });
   return url;
@@ -72,8 +73,8 @@ console.log('▶ build shared packages');
 run('pnpm', ['turbo', 'run', 'build', '--filter=./packages/*'], { stdio: 'inherit' });
 
 const remoteUrls = {
-  REVIEW_LIST_URL: process.env.REVIEW_LIST_URL ?? productionUrl(APPS['review-list'].project),
-  DOC_VIEWER_URL: process.env.DOC_VIEWER_URL ?? productionUrl(APPS['doc-viewer'].project),
+  REVIEW_LIST_URL: process.env.REVIEW_LIST_URL ?? productionUrl('review-list'),
+  DOC_VIEWER_URL: process.env.DOC_VIEWER_URL ?? productionUrl('doc-viewer'),
 };
 
 for (const name of targets.filter((t) => t !== 'shell')) {
@@ -81,7 +82,7 @@ for (const name of targets.filter((t) => t !== 'shell')) {
   remoteUrls[APPS[name].env] = deploy(name);
 }
 
-let shellUrl = productionUrl(APPS.shell.project);
+let shellUrl = productionUrl('shell');
 if (targets.includes('shell')) {
   build('shell', remoteUrls);
   shellUrl = deploy('shell');
